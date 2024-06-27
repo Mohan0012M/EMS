@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -15,7 +14,7 @@ import '../../utils/app_color.dart';
 import '../../widgets/my_widgets.dart';
 
 class CreateEventView extends StatefulWidget {
-  CreateEventView({Key? key}) : super(key: key);
+  const CreateEventView({Key? key}) : super(key: key);
 
   @override
   State<CreateEventView> createState() => _CreateEventViewState();
@@ -35,8 +34,8 @@ class _CreateEventViewState extends State<CreateEventView> {
   TextEditingController endTimeController = TextEditingController();
   TextEditingController startTimeController = TextEditingController();
   TextEditingController frequencyEventController = TextEditingController();
-  TimeOfDay startTime = TimeOfDay(hour: 0, minute: 0);
-  TimeOfDay endTime = TimeOfDay(hour: 0, minute: 0);
+  TimeOfDay startTime = const TimeOfDay(hour: 0, minute: 0);
+  TimeOfDay endTime = const TimeOfDay(hour: 0, minute: 0);
 
   var selectedFrequency = -2;
 
@@ -52,14 +51,14 @@ class _CreateEventViewState extends State<CreateEventView> {
     endTimeController.clear();
     startTimeController.clear();
     frequencyEventController.clear();
-    startTime = TimeOfDay(hour: 0, minute: 0);
-    endTime = TimeOfDay(hour: 0, minute: 0);
+    startTime = const TimeOfDay(hour: 0, minute: 0);
+    endTime = const TimeOfDay(hour: 0, minute: 0);
     setState(() {});
   }
 
   var isCreatingEvent = false.obs;
 
-   _selectDate(BuildContext context) async {
+  _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -84,13 +83,12 @@ class _CreateEventViewState extends State<CreateEventView> {
     if (picked != null) {
       startTime = picked;
       startTimeController.text =
-      '${startTime.hourOfPeriod > 9 ? "" : '0'}${startTime.hour > 12 ? '${startTime.hour - 12}' : startTime.hour}:${startTime.minute > 9 ? startTime.minute : '0${startTime.minute}'} ${startTime.hour > 12 ? 'PM' : 'AM'}';
+          '${startTime.hourOfPeriod > 9 ? "" : '0'}${startTime.hour > 12 ? '${startTime.hour - 12}' : startTime.hour}:${startTime.minute > 9 ? startTime.minute : '0${startTime.minute}'} ${startTime.hour > 12 ? 'PM' : 'AM'}';
     }
-    print("start ${startTimeController.text}");
     setState(() {});
   }
 
-   endTimeMethod(BuildContext context) async {
+  endTimeMethod(BuildContext context) async {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),
@@ -98,20 +96,17 @@ class _CreateEventViewState extends State<CreateEventView> {
     if (picked != null) {
       endTime = picked;
       endTimeController.text =
-      '${endTime.hourOfPeriod > 9 ? "" : "0"}${endTime.hour > 9 ? "" : "0"}${endTime.hour > 12 ? '${endTime.hour - 12}' : endTime.hour}:${endTime.minute > 9 ? endTime.minute : '0${endTime.minute}'} ${endTime.hour > 12 ? 'PM' : 'AM'}';
+          '${endTime.hourOfPeriod > 9 ? "" : "0"}${endTime.hour > 9 ? "" : "0"}${endTime.hour > 12 ? '${endTime.hour - 12}' : endTime.hour}:${endTime.minute > 9 ? endTime.minute : '0${endTime.minute}'} ${endTime.hour > 12 ? 'PM' : 'AM'}';
     }
 
-    print(endTime.hourOfPeriod);
     setState(() {});
   }
 
-  String event_type = 'Public';
-  List<String> list_item = ['Public', 'Private'];
-
-
+  String eventType = 'Public';
+  List<String> listItem = ['Public', 'Private'];
 
   String accessModifier = 'Closed';
-  List<String> close_list = [
+  List<String> closeList = [
     'Closed',
     'Open',
   ];
@@ -139,7 +134,7 @@ class _CreateEventViewState extends State<CreateEventView> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 20),
+          margin: const EdgeInsets.symmetric(horizontal: 20),
           child: Form(
             key: formKey,
             child: Column(
@@ -153,24 +148,24 @@ class _CreateEventViewState extends State<CreateEventView> {
                   children: [
                     Container(
                       alignment: Alignment.center,
-                      padding: EdgeInsets.only(left: 10, right: 10),
+                      padding: const EdgeInsets.only(left: 10, right: 10),
                       width: 90,
                       height: 33,
                       decoration: BoxDecoration(
                           border: Border(
-                              bottom: BorderSide(color: Colors.black.withOpacity(0.6),width: 0.6)
-                          )
-                      ),
+                              bottom: BorderSide(
+                                  color: Colors.black.withOpacity(0.6),
+                                  width: 0.6))),
                       child: DropdownButton(
                         isExpanded: true,
                         underline: Container(
-                          // decoration: BoxDecoration(
-                          //   border: Border.all(
-                          //     width: 0,
-                          //     color: Colors.white,
-                          //   ),
-                          // ),
-                        ),
+                            // decoration: BoxDecoration(
+                            //   border: Border.all(
+                            //     width: 0,
+                            //     color: Colors.white,
+                            //   ),
+                            // ),
+                            ),
 
                         // borderRadius: BorderRadius.circular(10),
                         icon: Image.asset('assets/arrowDown.png'),
@@ -179,15 +174,15 @@ class _CreateEventViewState extends State<CreateEventView> {
                           fontWeight: FontWeight.w400,
                           color: AppColors.black,
                         ),
-                        value: event_type,
+                        value: eventType,
                         onChanged: (String? newValue) {
                           setState(
-                                () {
-                              event_type = newValue!;
+                            () {
+                              eventType = newValue!;
                             },
                           );
                         },
-                        items: list_item
+                        items: listItem
                             .map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem(
                             value: value,
@@ -196,7 +191,6 @@ class _CreateEventViewState extends State<CreateEventView> {
                         }).toList(),
                       ),
                     ),
-
                   ],
                 ),
                 SizedBox(
@@ -211,7 +205,7 @@ class _CreateEventViewState extends State<CreateEventView> {
                   child: DottedBorder(
                     color: AppColors.border,
                     strokeWidth: 1.5,
-                    dashPattern: [6, 6],
+                    dashPattern: const [6, 6],
                     child: Container(
                       alignment: Alignment.center,
                       child: Column(
@@ -221,7 +215,7 @@ class _CreateEventViewState extends State<CreateEventView> {
                           SizedBox(
                             height: Get.height * 0.05,
                           ),
-                          Container(
+                          SizedBox(
                             width: 76,
                             height: 59,
                             child: Image.asset('assets/uploadIcon.png'),
@@ -234,7 +228,7 @@ class _CreateEventViewState extends State<CreateEventView> {
                               fontWeight: FontWeight.w400,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5,
                           ),
                           elevatedButton(
@@ -247,113 +241,115 @@ class _CreateEventViewState extends State<CreateEventView> {
                     ),
                   ),
                 ),
-                media.length == 0
+                media.isEmpty
+                    ? Container()
+                    : const SizedBox(
+                        height: 20,
+                      ),
+
+                media.isEmpty
                     ? Container()
                     : SizedBox(
-                  height: 20,
-                ),
-
-                media.length == 0
-                    ? Container()
-                    : Container(
-                  width: Get.width,
-                  height: Get.width * 0.3,
-                  child: ListView.builder(
-                      itemBuilder: (ctx, i) {
-                        return
-                            media[i].isVideo!
-                          //!isImage[i]
-                            ? Container(
-                          width: Get.width * 0.3,
-                          height: Get.width * 0.3,
-                          margin: EdgeInsets.only(
-                              right: 15, bottom: 10, top: 10),
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: MemoryImage(media[i].thumbnail!),
-                                fit: BoxFit.fill),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Stack(
-                            children: [
-                              Row(
-                                crossAxisAlignment:
-                                CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                MainAxisAlignment.end,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.all(5),
-                                    child: CircleAvatar(
-                                      child: IconButton(
-                                        onPressed: () {
-                                          media.removeAt(i);
-                                          // media.removeAt(i);
-                                          // isImage.removeAt(i);
-                                          // thumbnail.removeAt(i);
-                                          setState(() {});
-                                        },
-                                        icon: Icon(Icons.close),
+                        width: Get.width,
+                        height: Get.width * 0.3,
+                        child: ListView.builder(
+                            itemBuilder: (ctx, i) {
+                              return media[i].isVideo!
+                                  //!isImage[i]
+                                  ? Container(
+                                      width: Get.width * 0.3,
+                                      height: Get.width * 0.3,
+                                      margin: const EdgeInsets.only(
+                                          right: 15, bottom: 10, top: 10),
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: MemoryImage(
+                                                media[i].thumbnail!),
+                                            fit: BoxFit.fill),
+                                        borderRadius: BorderRadius.circular(10),
                                       ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              Align(
-                                alignment: Alignment.center,
-                                child: Icon(
-                                  Icons.slow_motion_video_rounded,
-                                  color: Colors.white,
-                                  size: 40,
-                                ),
-                              )
-                            ],
-                          ),
-                        )
-                            : Container(
-                          width: Get.width * 0.3,
-                          height: Get.width * 0.3,
-                          margin: EdgeInsets.only(
-                              right: 15, bottom: 10, top: 10),
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: FileImage(media[i].image!),
-                                fit: BoxFit.fill),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Row(
-                            crossAxisAlignment:
-                            CrossAxisAlignment.start,
-                            mainAxisAlignment:
-                            MainAxisAlignment.end,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.all(5),
-                                child: CircleAvatar(
-                                  child: IconButton(
-                                    onPressed: () {
-                                      media.removeAt(i);
-                                      // isImage.removeAt(i);
-                                      // thumbnail.removeAt(i);
-                                      setState(() {});
-                                    },
-                                    icon: Icon(Icons.close),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        );
-                      },
-                      itemCount: media.length,
-                      scrollDirection: Axis.horizontal),
-                ),
+                                      child: Stack(
+                                        children: [
+                                          Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(5),
+                                                child: CircleAvatar(
+                                                  child: IconButton(
+                                                    onPressed: () {
+                                                      media.removeAt(i);
+                                                      // media.removeAt(i);
+                                                      // isImage.removeAt(i);
+                                                      // thumbnail.removeAt(i);
+                                                      setState(() {});
+                                                    },
+                                                    icon:
+                                                        const Icon(Icons.close),
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                          const Align(
+                                            alignment: Alignment.center,
+                                            child: Icon(
+                                              Icons.slow_motion_video_rounded,
+                                              color: Colors.white,
+                                              size: 40,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  : Container(
+                                      width: Get.width * 0.3,
+                                      height: Get.width * 0.3,
+                                      margin: const EdgeInsets.only(
+                                          right: 15, bottom: 10, top: 10),
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: FileImage(media[i].image!),
+                                            fit: BoxFit.fill),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(5),
+                                            child: CircleAvatar(
+                                              child: IconButton(
+                                                onPressed: () {
+                                                  media.removeAt(i);
+                                                  // isImage.removeAt(i);
+                                                  // thumbnail.removeAt(i);
+                                                  setState(() {});
+                                                },
+                                                icon: const Icon(Icons.close),
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    );
+                            },
+                            itemCount: media.length,
+                            scrollDirection: Axis.horizontal),
+                      ),
 
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 myTextField(
-                    bool: false,
+                    booll: false,
                     icon: 'assets/4DotIcon.png',
                     text: 'Event Name',
                     controller: titleController,
@@ -375,11 +371,11 @@ class _CreateEventViewState extends State<CreateEventView> {
                       return null;
                     }),
 
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 myTextField(
-                    bool: false,
+                    booll: false,
                     icon: 'assets/location.png',
                     text: 'Location',
                     controller: locationController,
@@ -399,7 +395,7 @@ class _CreateEventViewState extends State<CreateEventView> {
                       }
                       return null;
                     }),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Row(
@@ -440,7 +436,7 @@ class _CreateEventViewState extends State<CreateEventView> {
                         }),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
 
@@ -461,7 +457,7 @@ class _CreateEventViewState extends State<CreateEventView> {
                       return null;
                     }),
 
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
 
@@ -469,7 +465,8 @@ class _CreateEventViewState extends State<CreateEventView> {
                   height: 42,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
-                    border: Border.all(width: 1, color: AppColors.genderTextColor),
+                    border:
+                        Border.all(width: 1, color: AppColors.genderTextColor),
                   ),
                   child: TextFormField(
                     readOnly: true,
@@ -478,7 +475,7 @@ class _CreateEventViewState extends State<CreateEventView> {
                         return Container(
                           width: double.infinity,
                           height: Get.width * 0.6,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.only(
                                   topRight: Radius.circular(10),
@@ -492,208 +489,206 @@ class _CreateEventViewState extends State<CreateEventView> {
                                 children: [
                                   selectedFrequency == 10
                                       ? Container()
-                                      : SizedBox(
-                                    width: 5,
-                                  ),
+                                      : const SizedBox(
+                                          width: 5,
+                                        ),
                                   Expanded(
                                       child: InkWell(
-                                        onTap: () {
-                                          selectedFrequency = -1;
+                                    onTap: () {
+                                      selectedFrequency = -1;
 
-                                          state(() {});
-                                        },
-                                        child: Container(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 5, vertical: 10),
-                                          decoration: BoxDecoration(
-                                            color: selectedFrequency == -1
-                                                ? Colors.blue
-                                                : Colors.black.withOpacity(0.1),
-                                            borderRadius: BorderRadius.circular(10),
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              "Once",
-                                              style: TextStyle(
-                                                  color: selectedFrequency != -1
-                                                      ? Colors.black
-                                                      : Colors.white),
-                                            ),
-                                          ),
+                                      state(() {});
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 5, vertical: 10),
+                                      decoration: BoxDecoration(
+                                        color: selectedFrequency == -1
+                                            ? Colors.blue
+                                            : Colors.black.withOpacity(0.1),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          "Once",
+                                          style: TextStyle(
+                                              color: selectedFrequency != -1
+                                                  ? Colors.black
+                                                  : Colors.white),
                                         ),
-                                      )),
+                                      ),
+                                    ),
+                                  )),
                                   selectedFrequency == 10
                                       ? Container()
-                                      : SizedBox(
-                                    width: 5,
-                                  ),
+                                      : const SizedBox(
+                                          width: 5,
+                                        ),
                                   Expanded(
                                       child: InkWell(
-                                        onTap: () {
-                                          selectedFrequency = 0;
+                                    onTap: () {
+                                      selectedFrequency = 0;
 
-                                          state(() {});
-                                        },
-                                        child: Container(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 5, vertical: 10),
-                                          decoration: BoxDecoration(
-                                            color: selectedFrequency == 0
-                                                ? Colors.blue
-                                                : Colors.black.withOpacity(0.1),
-                                            borderRadius: BorderRadius.circular(10),
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              "Daily",
-                                              style: TextStyle(
-                                                  color: selectedFrequency != 0
-                                                      ? Colors.black
-                                                      : Colors.white),
-                                            ),
-                                          ),
+                                      state(() {});
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 5, vertical: 10),
+                                      decoration: BoxDecoration(
+                                        color: selectedFrequency == 0
+                                            ? Colors.blue
+                                            : Colors.black.withOpacity(0.1),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          "Daily",
+                                          style: TextStyle(
+                                              color: selectedFrequency != 0
+                                                  ? Colors.black
+                                                  : Colors.white),
                                         ),
-                                      )),
+                                      ),
+                                    ),
+                                  )),
                                   selectedFrequency == 10
                                       ? Container()
-                                      : SizedBox(
-                                    width: 10,
-                                  ),
+                                      : const SizedBox(
+                                          width: 10,
+                                        ),
                                   Expanded(
                                       child: InkWell(
-                                        onTap: () {
-                                          state(() {
-                                            selectedFrequency = 1;
-                                          });
-                                        },
-                                        child: Container(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 5, vertical: 10),
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(10),
-                                            color: selectedFrequency == 1
-                                                ? Colors.blue
-                                                : Colors.black.withOpacity(0.1),
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              "Weekly",
-                                              style: TextStyle(
-                                                  color: selectedFrequency != 1
-                                                      ? Colors.black
-                                                      : Colors.white),
-                                            ),
-                                          ),
+                                    onTap: () {
+                                      state(() {
+                                        selectedFrequency = 1;
+                                      });
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 5, vertical: 10),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: selectedFrequency == 1
+                                            ? Colors.blue
+                                            : Colors.black.withOpacity(0.1),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          "Weekly",
+                                          style: TextStyle(
+                                              color: selectedFrequency != 1
+                                                  ? Colors.black
+                                                  : Colors.white),
                                         ),
-                                      )),
+                                      ),
+                                    ),
+                                  )),
                                   selectedFrequency == 10
                                       ? Container()
-                                      : SizedBox(
-                                    width: 10,
-                                  ),
-
+                                      : const SizedBox(
+                                          width: 10,
+                                        ),
                                 ],
                               ),
                               Row(
                                 // mainAxisAlignment:
                                 //     MainAxisAlignment.spaceAround,
                                 children: [
-
                                   selectedFrequency == 10
                                       ? Container()
-                                      : SizedBox(
-                                    width: 10,
-                                  ),
+                                      : const SizedBox(
+                                          width: 10,
+                                        ),
                                   Expanded(
                                       child: InkWell(
-                                        onTap: () {
-                                          state(() {
-                                            selectedFrequency = 2;
-                                          });
-                                        },
-                                        child: Container(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 5, vertical: 10),
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(10),
-                                            color: selectedFrequency == 2
-                                                ? Colors.blue
-                                                : Colors.black.withOpacity(0.1),
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              "Monthly",
-                                              style: TextStyle(
-                                                  color: selectedFrequency != 2
-                                                      ? Colors.black
-                                                      : Colors.white),
-                                            ),
-                                          ),
+                                    onTap: () {
+                                      state(() {
+                                        selectedFrequency = 2;
+                                      });
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 5, vertical: 10),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: selectedFrequency == 2
+                                            ? Colors.blue
+                                            : Colors.black.withOpacity(0.1),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          "Monthly",
+                                          style: TextStyle(
+                                              color: selectedFrequency != 2
+                                                  ? Colors.black
+                                                  : Colors.white),
                                         ),
-                                      )),
+                                      ),
+                                    ),
+                                  )),
                                   selectedFrequency == 10
                                       ? Container()
-                                      : SizedBox(
-                                    width: 10,
-                                  ),
+                                      : const SizedBox(
+                                          width: 10,
+                                        ),
                                   Expanded(
                                       child: InkWell(
-                                        child: Container(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 5, vertical: 10),
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(10),
-                                            color: selectedFrequency == 3
-                                                ? Colors.blue
-                                                : Colors.black.withOpacity(0.1),
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              "Yearly",
-                                              style: TextStyle(
-                                                  color: selectedFrequency != 3
-                                                      ? Colors.black
-                                                      : Colors.white),
-                                            ),
-                                          ),
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 5, vertical: 10),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: selectedFrequency == 3
+                                            ? Colors.blue
+                                            : Colors.black.withOpacity(0.1),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          "Yearly",
+                                          style: TextStyle(
+                                              color: selectedFrequency != 3
+                                                  ? Colors.black
+                                                  : Colors.white),
                                         ),
-                                        onTap: () {
-                                          state(() {
-                                            selectedFrequency = 3;
-                                          });
-                                        },
-                                      )),
+                                      ),
+                                    ),
+                                    onTap: () {
+                                      state(() {
+                                        selectedFrequency = 3;
+                                      });
+                                    },
+                                  )),
                                   selectedFrequency == 10
                                       ? Container()
-                                      : SizedBox(
-                                    width: 5,
-                                  ),
+                                      : const SizedBox(
+                                          width: 5,
+                                        ),
                                 ],
                               ),
                               Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceAround,
+                                    MainAxisAlignment.spaceAround,
                                 children: [
                                   MaterialButton(
                                     minWidth: Get.width * 0.8,
                                     onPressed: () {
                                       frequencyEventController.text =
-                                      selectedFrequency == -1
-                                          ? 'Once':
-                                      selectedFrequency == 0
-                                          ? 'Daily'
-                                          : selectedFrequency == 1
-                                          ? 'Weekly'
-                                          : selectedFrequency == 2
-                                          ? 'Monthly'
-                                          : 'Yearly';
+                                          selectedFrequency == -1
+                                              ? 'Once'
+                                              : selectedFrequency == 0
+                                                  ? 'Daily'
+                                                  : selectedFrequency == 1
+                                                      ? 'Weekly'
+                                                      : selectedFrequency == 2
+                                                          ? 'Monthly'
+                                                          : 'Yearly';
                                       Get.back();
                                     },
-                                    child: Text(
+                                    color: Colors.blue,
+                                    child: const Text(
                                       "Select",
                                       style: TextStyle(color: Colors.white),
                                     ),
-                                    color: Colors.blue,
                                   )
                                 ],
                               ),
@@ -713,8 +708,8 @@ class _CreateEventViewState extends State<CreateEventView> {
                     },
                     controller: frequencyEventController,
                     decoration: InputDecoration(
-                      contentPadding: EdgeInsets.only(top: 3),
-                      errorStyle: TextStyle(fontSize: 0),
+                      contentPadding: const EdgeInsets.only(top: 3),
+                      errorStyle: const TextStyle(fontSize: 0),
                       hintStyle: TextStyle(
                         color: AppColors.genderTextColor,
                       ),
@@ -742,7 +737,7 @@ class _CreateEventViewState extends State<CreateEventView> {
                 //       }
                 //     }
                 // ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Row(
@@ -768,27 +763,28 @@ class _CreateEventViewState extends State<CreateEventView> {
                         }),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Row(
                   children: [
                     myText(
                         text: 'Description/Instruction',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w700,
                         ))
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Container(
                   height: 149,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
-                    border: Border.all(width: 1, color: AppColors.genderTextColor),
+                    border:
+                        Border.all(width: 1, color: AppColors.genderTextColor),
                   ),
                   child: TextFormField(
                     maxLines: 5,
@@ -802,14 +798,15 @@ class _CreateEventViewState extends State<CreateEventView> {
                       }
                       return null;
                     },
-                    decoration: InputDecoration(border: InputBorder.none,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
                       contentPadding:
-                      EdgeInsets.only(top: 25, left: 15, right: 15),
+                          const EdgeInsets.only(top: 25, left: 15, right: 15),
                       hintStyle: TextStyle(
                         color: AppColors.genderTextColor,
                       ),
                       hintText:
-                      'Write a summary and any details your invitee should know about the event...',
+                          'Write a summary and any details your invitee should know about the event...',
                       // border: OutlineInputBorder(
                       //   borderRadius: BorderRadius.circular(8.0),
                       // ),
@@ -823,7 +820,7 @@ class _CreateEventViewState extends State<CreateEventView> {
                   alignment: Alignment.topLeft,
                   child: myText(
                     text: 'Who can invite?',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
                     ),
@@ -837,12 +834,13 @@ class _CreateEventViewState extends State<CreateEventView> {
                   children: [
                     Container(
                       alignment: Alignment.center,
-                      padding: EdgeInsets.only(left: 10, right: 10),
+                      padding: const EdgeInsets.only(left: 10, right: 10),
                       width: 150,
                       height: 40,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
-                        border: Border.all(width: 1, color: AppColors.genderTextColor),
+                        border: Border.all(
+                            width: 1, color: AppColors.genderTextColor),
                       ),
                       // decoration: BoxDecoration(
                       //
@@ -854,8 +852,7 @@ class _CreateEventViewState extends State<CreateEventView> {
                       // ),
                       child: DropdownButton(
                         isExpanded: true,
-                        underline: Container(
-                        ),
+                        underline: Container(),
                         //borderRadius: BorderRadius.circular(10),
                         icon: Image.asset('assets/arrowDown.png'),
                         elevation: 16,
@@ -866,18 +863,18 @@ class _CreateEventViewState extends State<CreateEventView> {
                         value: accessModifier,
                         onChanged: (String? newValue) {
                           setState(
-                                () {
+                            () {
                               accessModifier = newValue!;
                             },
                           );
                         },
-                        items: close_list
+                        items: closeList
                             .map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem(
                             value: value,
                             child: Text(
                               value,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400,
                                 color: Color(0xffA6A6A6),
@@ -908,110 +905,104 @@ class _CreateEventViewState extends State<CreateEventView> {
                   height: Get.height * 0.03,
                 ),
                 Obx(() => isCreatingEvent.value
-                    ? Center(
-                  child: CircularProgressIndicator(),
-                )
-                    : Container(
-                  height: 42,
-                  width: double.infinity,
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : SizedBox(
+                        height: 42,
+                        width: double.infinity,
+                        child: elevatedButton(
+                            onpress: () async {
+                              if (!formKey.currentState!.validate()) {
+                                return;
+                              }
 
-                  child: elevatedButton(
+                              if (media.isEmpty) {
+                                Get.snackbar('Opps', "Media is required.",
+                                    colorText: Colors.white,
+                                    backgroundColor: Colors.blue);
 
-                      onpress: () async {
-                        if (!formKey.currentState!.validate()) {
-                          return;
-                        }
+                                return;
+                              }
 
-                        if (media.isEmpty) {
-                          Get.snackbar('Opps', "Media is required.",
-                              colorText: Colors.white,
-                              backgroundColor: Colors.blue);
+                              if (tagsController.text.isEmpty) {
+                                Get.snackbar('Opps', "Tags is required.",
+                                    colorText: Colors.white,
+                                    backgroundColor: Colors.blue);
 
-                          return;
-                        }
+                                return;
+                              }
 
-                        if (tagsController.text.isEmpty) {
-                          Get.snackbar('Opps', "Tags is required.",
-                              colorText: Colors.white,
-                              backgroundColor: Colors.blue);
+                              isCreatingEvent(true);
 
-                          return;
-                        }
+                              DataController dataController = Get.find();
 
-                        isCreatingEvent(true);
+                              if (media.isNotEmpty) {
+                                for (int i = 0; i < media.length; i++) {
+                                  if (media[i].isVideo!) {
+                                    /// if video then first upload video file and then upload thumbnail and
+                                    /// store it in the map
 
+                                    String thumbnailUrl = await dataController
+                                        .uploadThumbnailToFirebase(
+                                            media[i].thumbnail!);
 
-                        DataController dataController = Get.find();
+                                    String videoUrl = await dataController
+                                        .uploadImageToFirebase(media[i].video!);
 
-                        if(media.isNotEmpty){
-                          for(int i=0;i<media.length;i++){
-                            if(media[i].isVideo!){
-                              /// if video then first upload video file and then upload thumbnail and
-                              /// store it in the map
+                                    mediaUrls.add({
+                                      'url': videoUrl,
+                                      'thumbnail': thumbnailUrl,
+                                      'isImage': false
+                                    });
+                                  } else {
+                                    /// just upload image
 
-                        String thumbnailUrl= await dataController.uploadThumbnailToFirebase(media[i].thumbnail!);
+                                    String imageUrl = await dataController
+                                        .uploadImageToFirebase(media[i].image!);
+                                    mediaUrls.add(
+                                        {'url': imageUrl, 'isImage': true});
+                                  }
+                                }
+                              }
 
-                        String videoUrl = await dataController.uploadImageToFirebase(media[i].video!);
+                              List<String> tags =
+                                  tagsController.text.split(',');
 
+                              Map<String, dynamic> eventData = {
+                                'event': eventType,
+                                'event_name': titleController.text,
+                                'location': locationController.text,
+                                'date':
+                                    '${date!.day}-${date!.month}-${date!.year}',
+                                'start_time': startTimeController.text,
+                                'end_time': endTimeController.text,
+                                'max_entries': int.parse(maxEntries.text),
+                                'frequency_of_event':
+                                    frequencyEventController.text,
+                                'description': descriptionController.text,
+                                'who_can_invite': accessModifier,
+                                'joined': [
+                                  FirebaseAuth.instance.currentUser!.uid
+                                ],
+                                'price': priceController.text,
+                                'media': mediaUrls,
+                                'uid': FirebaseAuth.instance.currentUser!.uid,
+                                'tags': tags,
+                                'inviter': [
+                                  FirebaseAuth.instance.currentUser!.uid
+                                ]
+                              };
 
-                        mediaUrls.add({
-                          'url': videoUrl,
-                          'thumbnail': thumbnailUrl,
-                          'isImage': false
-                        });
-
-                            }else{
-                              /// just upload image
-
-                             String imageUrl = await dataController.uploadImageToFirebase(media[i].image!);
-                            mediaUrls.add({
-                              'url': imageUrl,
-                              'isImage': true
-                            });
-                            }
-
-                          }
-                        }
-
-                        List<String> tags =
-                        tagsController.text.split(',');
-
-                        Map<String, dynamic> eventData = {
-                          'event': event_type,
-                          'event_name': titleController.text,
-                          'location': locationController.text,
-                          'date':
-                          '${date!.day}-${date!.month}-${date!.year}',
-                          'start_time': startTimeController.text,
-                          'end_time': endTimeController.text,
-                          'max_entries': int.parse(maxEntries.text),
-                          'frequency_of_event':
-                          frequencyEventController.text,
-                          'description': descriptionController.text,
-                          'who_can_invite': accessModifier,
-                          'joined': [
-                            FirebaseAuth.instance.currentUser!.uid
-                          ],
-                          'price': priceController.text,
-                          'media': mediaUrls,
-                          'uid': FirebaseAuth.instance.currentUser!.uid,
-                          'tags': tags,
-                          'inviter':[
-                            FirebaseAuth.instance.currentUser!.uid
-                          ]
-                        };
-
-                        await dataController.createEvent(eventData)
-                        .then((value) {
-                          print("Event is done");
-                          isCreatingEvent(false);
-                          resetControllers();
-                        });
-
-
-                      },
-                      text: 'Create Event'),
-                )),
+                              await dataController
+                                  .createEvent(eventData)
+                                  .then((value) {
+                                isCreatingEvent(false);
+                                resetControllers();
+                              });
+                            },
+                            text: 'Create Event'),
+                      )),
                 SizedBox(
                   height: Get.height * 0.03,
                 ),
@@ -1024,19 +1015,15 @@ class _CreateEventViewState extends State<CreateEventView> {
   }
 
   getImageDialog(ImageSource source) async {
-    final ImagePicker _picker = ImagePicker();
+    final ImagePicker picker = ImagePicker();
     // Pick an image
-    final XFile? image = await _picker.pickImage(
+    final XFile? image = await picker.pickImage(
       source: source,
     );
 
     if (image != null) {
       media.add(EventMediaModel(
-        image: File(image.path),
-        video: null,
-        isVideo: false
-      ));
-
+          image: File(image.path), video: null, isVideo: false));
     }
 
     setState(() {});
@@ -1044,15 +1031,13 @@ class _CreateEventViewState extends State<CreateEventView> {
   }
 
   getVideoDialog(ImageSource source) async {
-    final ImagePicker _picker = ImagePicker();
+    final ImagePicker picker = ImagePicker();
     // Pick an image
-    final XFile? video = await _picker.pickVideo(
+    final XFile? video = await picker.pickVideo(
       source: source,
     );
 
     if (video != null) {
-
-
       // media.add(File(image.path));
 
       Uint8List? uint8list = await VideoThumbnail.thumbnailData(
@@ -1062,10 +1047,7 @@ class _CreateEventViewState extends State<CreateEventView> {
       );
 
       media.add(EventMediaModel(
-          thumbnail: uint8list!,
-          video: File(video.path),
-          isVideo: true
-      ));
+          thumbnail: uint8list!, video: File(video.path), isVideo: true));
       // thumbnail.add(uint8list!);
       //
       // isImage.add(false);
@@ -1081,7 +1063,7 @@ class _CreateEventViewState extends State<CreateEventView> {
     showDialog(
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text("Select Media Type"),
+            title: const Text("Select Media Type"),
             content: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -1090,13 +1072,13 @@ class _CreateEventViewState extends State<CreateEventView> {
                       Navigator.pop(context);
                       imageDialog(context, true);
                     },
-                    icon: Icon(Icons.image)),
+                    icon: const Icon(Icons.image)),
                 IconButton(
                     onPressed: () {
                       Navigator.pop(context);
                       imageDialog(context, false);
                     },
-                    icon: Icon(Icons.slow_motion_video_outlined)),
+                    icon: const Icon(Icons.slow_motion_video_outlined)),
               ],
             ),
           );
@@ -1108,7 +1090,7 @@ class _CreateEventViewState extends State<CreateEventView> {
     showDialog(
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text("Media Source"),
+            title: const Text("Media Source"),
             content: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -1120,7 +1102,7 @@ class _CreateEventViewState extends State<CreateEventView> {
                         getVideoDialog(ImageSource.gallery);
                       }
                     },
-                    icon: Icon(Icons.image)),
+                    icon: const Icon(Icons.image)),
                 IconButton(
                     onPressed: () {
                       if (image) {
@@ -1129,7 +1111,7 @@ class _CreateEventViewState extends State<CreateEventView> {
                         getVideoDialog(ImageSource.camera);
                       }
                     },
-                    icon: Icon(Icons.camera_alt)),
+                    icon: const Icon(Icons.camera_alt)),
               ],
             ),
           );

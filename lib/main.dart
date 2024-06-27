@@ -10,37 +10,35 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  print(message.data.toString());
-  print(message.notification!.toString());
-}
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {}
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
- 
-Stripe.publishableKey = publishableKey;
+
+  Stripe.publishableKey = publishableKey;
   await Firebase.initializeApp();
-   LocalNotificationService.initialize();
+  LocalNotificationService.initialize();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-
-
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       theme: ThemeData(
         textTheme: GoogleFonts.latoTextTheme(
-          Theme.of(context).textTheme, // If this is not set, then ThemeData.light().textTheme is used.
+          Theme.of(context)
+              .textTheme, // If this is not set, then ThemeData.light().textTheme is used.
         ),
       ),
       title: 'Flutter Demo',
-      home: FirebaseAuth.instance.currentUser == null? OnBoardingScreen() : BottomBarView(),
+      home: FirebaseAuth.instance.currentUser == null
+          ? const OnBoardingScreen()
+          : const BottomBarView(),
     );
   }
 }
-

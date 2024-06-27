@@ -1,19 +1,19 @@
 import 'package:ems/controller/data_controller.dart';
-import 'package:ems/services/notification_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/events_feed_widget.dart';
+
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   DataController dataController = Get.find<DataController>();
 
   @override
@@ -22,16 +22,14 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Colors.black.withOpacity(0.03),
       body: SafeArea(
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           height: double.infinity,
           width: double.infinity,
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                
-               CustomAppBar(),
-                
+                customAppBar(),
                 Text(
                   "What Going on today",
                   style: GoogleFonts.raleway(
@@ -40,8 +38,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: Get.height * 0.02,
                 ),
-                EventsFeed(),
-                Obx(()=> dataController.isUsersLoading.value? Center(child: CircularProgressIndicator(),) : EventsIJoined())
+                eventsFeed(),
+                Obx(() => dataController.isUsersLoading.value
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : eventsIJoined())
               ],
             ),
           ),
@@ -49,7 +51,4 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
-
-
-  }
+}

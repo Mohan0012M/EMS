@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -14,59 +13,63 @@ Widget myText({text, style, textAlign}) {
   );
 }
 
-
-
-Widget textField({text,TextEditingController? controller,Function? validator,TextInputType inputType = TextInputType.text}) {
+Widget textField(
+    {text,
+    TextEditingController? controller,
+    Function? validator,
+    TextInputType inputType = TextInputType.text}) {
   return Container(
     height: 48,
     margin: EdgeInsets.only(bottom: Get.height * 0.02),
     child: TextFormField(
       keyboardType: inputType,
       controller: controller,
-      validator: (input)=> validator!(input),
+      validator: (input) => validator!(input),
       decoration: InputDecoration(
           hintText: text,
-          errorStyle: TextStyle(fontSize: 0),
-          contentPadding: EdgeInsets.only(top: 10, left: 10),
+          errorStyle: const TextStyle(fontSize: 0),
+          contentPadding: const EdgeInsets.only(top: 10, left: 10),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0))),
     ),
   );
 }
 
-Widget myTextField({text, String? icon, bool, TextEditingController? controller,Function? validator}) {
-  return Container(
+Widget myTextField(
+    {text,
+    String? icon,
+    booll,
+    TextEditingController? controller,
+    Function? validator}) {
+  return SizedBox(
     height: 45,
     child: TextFormField(
-
-      validator: (input)=> validator!(input),
-      obscureText: bool,
+      validator: (input) => validator!(input),
+      obscureText: booll,
       controller: controller,
       decoration: InputDecoration(
-        contentPadding:EdgeInsets.only(top: 5),
-        errorStyle: TextStyle(fontSize: 0),
-        hintStyle: TextStyle(
-          color: AppColors.genderTextColor,
-        ),
-        hintText: text,
-        prefixIcon: Image.asset(
-          icon!,
-          cacheHeight: 20,
-        ),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0))
-      ),
+          contentPadding: const EdgeInsets.only(top: 5),
+          errorStyle: const TextStyle(fontSize: 0),
+          hintStyle: TextStyle(
+            color: AppColors.genderTextColor,
+          ),
+          hintText: text,
+          prefixIcon: Image.asset(
+            icon!,
+            cacheHeight: 20,
+          ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0))),
     ),
   );
 }
 
-Widget socialAppsIcons({text,Function? onPressed}) {
+Widget socialAppsIcons({text, Function? onPressed}) {
   return InkWell(
-    onTap: ()=> onPressed!(),
+    onTap: () => onPressed!(),
     child: Container(
-      margin: EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
       width: 48,
       height: 48,
       decoration: BoxDecoration(
-
         image: DecorationImage(
           image: AssetImage(text),
         ),
@@ -76,26 +79,23 @@ Widget socialAppsIcons({text,Function? onPressed}) {
 }
 
 Widget settingIconAndText(
-    Function onPressed, {
-      text,
+  Function onPressed, {
+  text,
+  image,
+}) {
+  return ListTile(
+    onTap: () => onPressed(),
+    leading: SvgPicture.asset(
       image,
-    }) {
-  return Container(
-    // margin: EdgeInsets.only(top: Get.height * 0.03),
-    child: ListTile(
-      onTap: () => onPressed(),
-      leading: SvgPicture.asset(
-        image,
-        height: 20,
-      ),
-      title: Transform.translate(
-        offset: Offset(-16, 0),
-        child: Text(text,
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-            )),
-      ),
+      height: 20,
+    ),
+    title: Transform.translate(
+      offset: const Offset(-16, 0),
+      child: Text(text,
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+          )),
     ),
   );
 }
@@ -103,15 +103,14 @@ Widget settingIconAndText(
 Widget elevatedButton({text, Function? onpress}) {
   return ElevatedButton(
     style: ButtonStyle(
-
-      backgroundColor: MaterialStateProperty.all<Color>(AppColors.blue),
+      backgroundColor: WidgetStateProperty.all<Color>(AppColors.blue),
     ),
     onPressed: () {
       onpress!();
     },
     child: Text(
       text,
-      style: TextStyle(
+      style: const TextStyle(
         fontSize: 18,
         fontWeight: FontWeight.w500,
       ),
@@ -121,7 +120,7 @@ Widget elevatedButton({text, Function? onpress}) {
 
 Widget labelTextField({label, hintText}) {
   return Container(
-    margin: EdgeInsets.only(top: 20),
+    margin: const EdgeInsets.only(top: 20),
     height: 48,
     child: TextFormField(
       decoration: InputDecoration(
@@ -140,7 +139,7 @@ Widget rowContainer(Function onPressed, {text}) {
     onTap: () => onPressed(),
     child: Container(
       height: 48,
-      padding: EdgeInsets.symmetric(horizontal: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           border: Border.all(width: 0.5, color: Colors.grey)),
@@ -149,8 +148,9 @@ Widget rowContainer(Function onPressed, {text}) {
         children: [
           myText(
               text: text,
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
-          Icon(
+              style:
+                  const TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
+          const Icon(
             Icons.arrow_forward_ios,
             size: 16,
           )
@@ -160,34 +160,36 @@ Widget rowContainer(Function onPressed, {text}) {
   );
 }
 
-Widget iconWithTitle({text, Function? func,bool? isShow = true}) {
+Widget iconWithTitle({text, Function? func, bool? isShow = true}) {
   return Row(
     children: [
-      !isShow!? Container(): Expanded(
-        flex: 0,
-        child: InkWell(
-          onTap: () {
-            func!();
-          },
-          child: Container(
-            margin: EdgeInsets.only(
-              left: Get.width * 0.02,
-              top: Get.height * 0.08,
-              bottom: Get.height * 0.02,
-            ),
-            // alignment: Alignment.center,
-            width: 30,
-            height: 30,
-            decoration: BoxDecoration(
-              // border: Border.all(width: 1),
-              // borderRadius: BorderRadius.circular(50),
-              image: DecorationImage(
-                image: AssetImage('assets/Header.png'),
+      !isShow!
+          ? Container()
+          : Expanded(
+              flex: 0,
+              child: InkWell(
+                onTap: () {
+                  func!();
+                },
+                child: Container(
+                  margin: EdgeInsets.only(
+                    left: Get.width * 0.02,
+                    top: Get.height * 0.08,
+                    bottom: Get.height * 0.02,
+                  ),
+                  // alignment: Alignment.center,
+                  width: 30,
+                  height: 30,
+                  decoration: const BoxDecoration(
+                    // border: Border.all(width: 1),
+                    // borderRadius: BorderRadius.circular(50),
+                    image: DecorationImage(
+                      image: AssetImage('assets/Header.png'),
+                    ),
+                  ),
+                ),
               ),
             ),
-          ),
-        ),
-      ),
       Expanded(
         flex: 6,
         child: Container(
@@ -198,14 +200,14 @@ Widget iconWithTitle({text, Function? func,bool? isShow = true}) {
           ),
           child: myText(
             text: text,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 23,
               fontWeight: FontWeight.w600,
             ),
           ),
         ),
       ),
-      Expanded(
+      const Expanded(
         flex: 1,
         child: Text(''),
       )
@@ -213,19 +215,16 @@ Widget iconWithTitle({text, Function? func,bool? isShow = true}) {
   );
 }
 
-
-
-Widget iconTitleContainer({
-  text,
-  path,
-  Function? onPress,
-  bool isReadOnly = false,
-  TextInputType type = TextInputType.text,
-  TextEditingController? controller,
-  Function? validator,
-  double width = 150,
-  double height=40
-}) {
+Widget iconTitleContainer(
+    {text,
+    path,
+    Function? onPress,
+    bool isReadOnly = false,
+    TextInputType type = TextInputType.text,
+    TextEditingController? controller,
+    Function? validator,
+    double width = 150,
+    double height = 40}) {
   return Container(
     // padding: EdgeInsets.only(left: 10),
     decoration: BoxDecoration(
@@ -235,7 +234,7 @@ Widget iconTitleContainer({
     width: width,
     height: height,
     child: TextFormField(
-      validator: (String? input)=> validator!(input!),
+      validator: (String? input) => validator!(input!),
       controller: controller,
       keyboardType: type,
       readOnly: isReadOnly,
@@ -248,13 +247,11 @@ Widget iconTitleContainer({
       //   color: AppColors.genderTextColor,
       // ),
       decoration: InputDecoration(
-        errorStyle: TextStyle(fontSize: 0),
-        contentPadding: EdgeInsets.only(top: 3),
-        prefixIcon: Container(
-          child: Image.asset(
-            path,
-            cacheHeight: 18,
-          ),
+        errorStyle: const TextStyle(fontSize: 0),
+        contentPadding: const EdgeInsets.only(top: 3),
+        prefixIcon: Image.asset(
+          path,
+          cacheHeight: 18,
         ),
         hintText: text,
         hintStyle: TextStyle(
@@ -262,10 +259,10 @@ Widget iconTitleContainer({
           fontWeight: FontWeight.w400,
           color: AppColors.genderTextColor,
         ),
-
         border: isReadOnly
             ? OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xffA6A6A6)),borderRadius: BorderRadius.circular(8))
+                borderSide: const BorderSide(color: Color(0xffA6A6A6)),
+                borderRadius: BorderRadius.circular(8))
             : OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
       ),
     ),
@@ -275,30 +272,26 @@ Widget iconTitleContainer({
 Widget community1st({title, path, style}) {
   return Row(
     children: [
-      path.toString().isEmpty?
-      Container(
-        width: 24,
-        height: 24,
-        decoration:  BoxDecoration(
-            shape: BoxShape.circle,
-            color: Colors.blue
-        ),
-        child: Icon(Icons.person,color: Colors.white,),
-
-      )
-          :Container(
-        width: 24,
-        height: 24,
-        decoration:  BoxDecoration(
-            shape: BoxShape.circle,
-            image: DecorationImage(
-                image: AssetImage(path),
-                fit: BoxFit.fill
+      path.toString().isEmpty
+          ? Container(
+              width: 24,
+              height: 24,
+              decoration: const BoxDecoration(
+                  shape: BoxShape.circle, color: Colors.blue),
+              child: const Icon(
+                Icons.person,
+                color: Colors.white,
+              ),
             )
-        ),
-
-      ),
-      SizedBox(
+          : Container(
+              width: 24,
+              height: 24,
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                      image: AssetImage(path), fit: BoxFit.fill)),
+            ),
+      const SizedBox(
         width: 10,
       ),
       myText(text: title, style: style)
@@ -309,37 +302,32 @@ Widget community1st({title, path, style}) {
 Widget userProfile({title, path, style}) {
   return Row(
     children: [
-      path.toString().isEmpty?
-      Container(
-        width: 24,
-        height: 24,
-        decoration:  BoxDecoration(
-            shape: BoxShape.circle,
-            color: Colors.blue
-        ),
-        child: Icon(Icons.person,color: Colors.white,),
-
-      )
-          :Container(
-        width: 24,
-        height: 24,
-        decoration:  BoxDecoration(
-            shape: BoxShape.circle,
-            image: DecorationImage(
-                image: NetworkImage(path),
-                fit: BoxFit.fill
+      path.toString().isEmpty
+          ? Container(
+              width: 24,
+              height: 24,
+              decoration: const BoxDecoration(
+                  shape: BoxShape.circle, color: Colors.blue),
+              child: const Icon(
+                Icons.person,
+                color: Colors.white,
+              ),
             )
-        ),
-
-      ),
-      SizedBox(
+          : Container(
+              width: 24,
+              height: 24,
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                      image: NetworkImage(path), fit: BoxFit.fill)),
+            ),
+      const SizedBox(
         width: 10,
       ),
       myText(text: title, style: style)
     ],
   );
 }
-
 
 Widget completeCommunityWidget({
   imagePath,
@@ -362,24 +350,24 @@ Widget completeCommunityWidget({
                 community1st(
                   path: imagePath,
                   title: imageTitle,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.w500,
                     color: Color(0xff333333),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
                 Row(
                   children: [
                     Image.asset(imagePath1),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     myText(
                       text: imageTitle1,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 10,
                         fontWeight: FontWeight.w500,
                         color: Color(0xff303030),
@@ -387,7 +375,7 @@ Widget completeCommunityWidget({
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
                 ClipRRect(
@@ -402,7 +390,7 @@ Widget completeCommunityWidget({
                 community1st(
                   path: imagePath2,
                   title: imageTitle2,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 10,
                     fontWeight: FontWeight.w500,
                     color: Color(0xff939394),
@@ -410,7 +398,7 @@ Widget completeCommunityWidget({
                 ),
                 myText(
                     text: lastTitle,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.w400,
                     ))
@@ -419,7 +407,7 @@ Widget completeCommunityWidget({
           ),
         ],
       ),
-      Divider()
+      const Divider()
     ],
   );
 }

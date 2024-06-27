@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 
 import '../../model/ticket_model.dart';
 import '../../utils/app_color.dart';
@@ -40,13 +38,12 @@ class _InviteguestState extends State<Inviteguest> {
   Widget build(BuildContext context) {
     var screenheight = MediaQuery.of(context).size.height;
     var screenwidth = MediaQuery.of(context).size.width;
-    final ButtonStyle style =
-        ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 16));
+    ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 16));
 
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 20),
+          margin: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
               iconWithTitle(text: 'Invite Guests'),
@@ -59,7 +56,7 @@ class _InviteguestState extends State<Inviteguest> {
                   style: TextStyle(color: AppColors.black.withOpacity(0.6)),
                   decoration: InputDecoration(
                     errorBorder: InputBorder.none,
-                    errorStyle: TextStyle(fontSize: 0, height: 0),
+                    errorStyle: const TextStyle(fontSize: 0, height: 0),
                     focusedErrorBorder: InputBorder.none,
                     fillColor: Colors.deepOrangeAccent[2],
                     filled: true,
@@ -82,7 +79,7 @@ class _InviteguestState extends State<Inviteguest> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(top: 15),
+                margin: const EdgeInsets.only(top: 15),
                 width: double.infinity,
                 height: 40,
                 child: ListView.builder(
@@ -112,27 +109,27 @@ class _InviteguestState extends State<Inviteguest> {
                   },
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  const Text(
                     'Suggested',
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  Container(
+                  SizedBox(
                     //alignment: Alignment.center,
 
                     width: 100,
                     height: 31,
                     child: ElevatedButton(
                       style: TextButton.styleFrom(
-                          shape: RoundedRectangleBorder(
+                          shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(
                               Radius.circular(4),
                             ),
@@ -154,11 +151,11 @@ class _InviteguestState extends State<Inviteguest> {
                   ),
                 ],
               ),
-              Container(
+              SizedBox(
                 width: double.infinity,
                 height: screenheight * 0.6,
                 child: ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   scrollDirection: Axis.vertical,
                   itemCount: invite.length,
                   itemBuilder: (context, index) {
@@ -169,7 +166,7 @@ class _InviteguestState extends State<Inviteguest> {
                         // },
                         //  child:
                         Container(
-                      margin: EdgeInsets.only(bottom: 10),
+                      margin: const EdgeInsets.only(bottom: 10),
                       width: 57,
                       height: 57,
                       decoration: BoxDecoration(
@@ -179,39 +176,39 @@ class _InviteguestState extends State<Inviteguest> {
                         //  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-                            padding: EdgeInsets.all(5),
+                            padding: const EdgeInsets.all(5),
                             height: 65,
                             width: 57,
                             child: Image(
-                              image: AssetImage('${invite[index].image}'),
+                              image: AssetImage(invite[index].image),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 13,
                           ),
                           Text(
-                            '${invite[index].name}',
-                            style: TextStyle(
+                            invite[index].name,
+                            style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          Spacer(),
-                          ChecksBox(),
+                          const Spacer(),
+                          const ChecksBox(),
                         ],
                       ),
                     );
                   },
                 ),
               ),
-              Container(
+              SizedBox(
                 height: 50,
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {},
                   child: myText(
                     text: "Send",
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w500,
                       color: Color(0xffFFFFFF),
@@ -219,7 +216,7 @@ class _InviteguestState extends State<Inviteguest> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
             ],
